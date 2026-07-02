@@ -1,58 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Trello App — Sistema Web de Gestión de Proyectos Colaborativos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web monolítica desarrollada con Laravel 13, Breeze, spatie/laravel-permission
+y PostgreSQL, inspirada en Trello. Proyecto Final — INF560 Desarrollo Web Backend — UATF.
 
-## About Laravel
+## Autor
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Carlos Matos Paco — Ingeniería Informática, 5.° semestre — UATF
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack tecnológico
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Componente       | Tecnología                        |
+|------------------|-----------------------------------|
+| Framework        | Laravel 13                        |
+| Lenguaje         | PHP 8.3+                          |
+| Base de datos    | PostgreSQL                        |
+| Autenticación    | Laravel Breeze (sesión nativa)    |
+| Roles y permisos | spatie/laravel-permission ^7.0    |
+| Vistas           | Blade + Tailwind CSS              |
+| Validación       | Form Requests                     |
+| Control versión  | Git (entrega por fases con tags)  |
 
-## Learning Laravel
+## Instalación
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+1. Clonar el repositorio:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/matos78630244-max/Proyecto-Final.git
+cd trello-app
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Instalar dependencias:
+```bash
+composer install
+npm install
+```
 
-## Contributing
+3. Copiar el archivo de entorno:
+```bash
+copy .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Configurar la base de datos en `.env`:
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=trello_app
+DB_USERNAME=trello
+DB_PASSWORD=123456
+```
 
-## Code of Conduct
+5. Ejecutar migraciones y seeders:
+```bash
+php artisan migrate:fresh --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. Compilar assets:
+```bash
+npm run build
+```
 
-## Security Vulnerabilities
+7. Levantar el servidor:
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Usuarios de prueba
 
-## License
+| Rol         | Email                    | Contraseña |
+|-------------|--------------------------|------------|
+| Admin       | admin@trello.com         | password   |
+| Líder       | lider@trello.com         | password   |
+| Colaborador | colaborador@trello.com   | password   |
+| Invitado    | invitado@trello.com      | password   |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Roles y permisos
+
+| Rol         | Tableros                      | Tareas                          | Usuarios   |
+|-------------|-------------------------------|---------------------------------|------------|
+| Admin       | CRUD total                    | CRUD total                      | Gestionar  |
+| Líder       | Crear y editar los suyos      | Crear, asignar en sus tableros  | —          |
+| Colaborador | Ver donde es miembro          | Crear y editar las asignadas    | —          |
+| Invitado    | Solo lectura                  | Solo comentar                   | —          |
+
+## Fases de desarrollo
+
+| Tag   | Descripción                                              |
+|-------|----------------------------------------------------------|
+| v0.1  | Migraciones, modelos, relaciones, factories y seeders    |
+| v0.2  | Autenticación con Breeze, layout sidebar estilo Trello   |
+| v0.3  | RBAC con spatie, seeder de roles/permisos, Policies      |
+| v0.4  | CRUD completo: tableros kanban, tareas, comentarios      |
+| v1.0  | Filtros, paginación, dashboard mejorado, README          |

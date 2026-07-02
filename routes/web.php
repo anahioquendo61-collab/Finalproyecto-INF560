@@ -15,9 +15,37 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    $user = auth()->user();
 
+    $totalProyectos = $user->hasRole('admin')
+        ? \App\Models\Project::count()
+        : $user->allProjects()->count();
+
+    $totalTareas = $user->hasRole('admin')
+        ? \App\Models\Task::count()
+        : $user->assignedTasks()->count();
+
+    $completadas = $user->hasRole('admin')
+        ? \App\Models\Task::where('estado', 'completada')->count()
+        : $user->assignedTasks()->where('estado', 'completada')->count();
+
+    $tareasRecientes = $user->hasRole('admin')
+        ? \App\Models\Task::with(['project', 'assignee'])
+        ->latest()->take(5)->get()
+        : $user->assignedTasks()->with(['project'])
+        ->latest()->take(5)->get();
+
+    $proyectosRecientes = $user->allProjects()
+        ->latest()->take(4)->get();
+
+    return view('dashboard', compact(
+        'totalProyectos',
+        'totalTareas',
+        'completadas',
+        'tareasRecientes',
+        'proyectosRecientes'
+    ));
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,4 +75,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

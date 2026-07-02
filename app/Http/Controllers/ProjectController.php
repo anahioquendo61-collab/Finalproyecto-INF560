@@ -18,7 +18,7 @@ class ProjectController extends Controller
             ? Project::with('owner')
             : Project::with('owner')->where(function ($q) use ($user) {
                 $q->where('owner_id', $user->id)
-                  ->orWhereHas('members', fn($q) => $q->where('users.id', $user->id));
+                    ->orWhereHas('members', fn($q) => $q->where('users.id', $user->id));
             });
 
         if ($request->filled('buscar')) {
@@ -62,15 +62,31 @@ class ProjectController extends Controller
 
         $project->load(['owner', 'members']);
 
-        $pendientes  = $project->pendientes()->with(['assignee', 'labels'])->get();
-        $enProgreso  = $project->enProgreso()->with(['assignee', 'labels'])->get();
-        $completadas = $project->completadas()->with(['assignee', 'labels'])->get();
+        $pendientes = $project->pendientes()
+            ->with(['assignee', 'labels'])
+            ->when($request->filled('prioridad'), fn($q) => $q->where('prioridad', $request->prioridad))
+            ->get();
+
+        $enProgreso = $project->enProgreso()
+            ->with(['assignee', 'labels'])
+            ->when($request->filled('prioridad'), fn($q) => $q->where('prioridad', $request->prioridad))
+            ->get();
+
+        $completadas = $project->completadas()
+            ->with(['assignee', 'labels'])
+            ->when($request->filled('prioridad'), fn($q) => $q->where('prioridad', $request->prioridad))
+            ->get();
 
         $members = $project->members;
         $labels  = \App\Models\Label::all();
 
         return view('projects.show', compact(
-            'project', 'pendientes', 'enProgreso', 'completadas', 'members', 'labels'
+            'project',
+            'pendientes',
+            'enProgreso',
+            'completadas',
+            'members',
+            'labels'
         ));
     }
 

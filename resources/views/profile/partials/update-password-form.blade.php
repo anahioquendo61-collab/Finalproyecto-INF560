@@ -1,47 +1,53 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+    <header class="mb-5">
+        <h2 class="text-white font-medium">Actualizar contraseña</h2>
+        <p class="text-gray-400 text-xs mt-1">
+            Usa una contraseña larga y aleatoria para mantener tu cuenta segura.
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update') }}" class="space-y-4">
         @csrf
         @method('put')
 
         <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+            <label class="block text-xs font-medium text-gray-400 mb-1">Contraseña actual</label>
+            <input type="password" name="current_password"
+                class="w-full bg-[#0D1117] border border-white/10 text-white rounded-lg px-4 py-2.5 text-sm
+                focus:outline-none focus:border-blue-500 transition-all" />
+            @error('current_password', 'updatePassword')
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+            <label class="block text-xs font-medium text-gray-400 mb-1">Nueva contraseña</label>
+            <input type="password" name="password"
+                class="w-full bg-[#0D1117] border border-white/10 text-white rounded-lg px-4 py-2.5 text-sm
+                focus:outline-none focus:border-blue-500 transition-all" />
+            @error('password', 'updatePassword')
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+            <label class="block text-xs font-medium text-gray-400 mb-1">Confirmar contraseña</label>
+            <input type="password" name="password_confirmation"
+                class="w-full bg-[#0D1117] border border-white/10 text-white rounded-lg px-4 py-2.5 text-sm
+                focus:outline-none focus:border-blue-500 transition-all" />
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
+            <button type="submit"
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm rounded-lg font-medium transition-all">
+                Actualizar
+            </button>
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
+                <p x-data="{ show: true }" x-show="show" x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                    class="text-green-400 text-xs">
+                    Contraseña actualizada.
+                </p>
             @endif
         </div>
     </form>
