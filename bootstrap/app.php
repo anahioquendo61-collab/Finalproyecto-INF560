@@ -1,5 +1,7 @@
 <?php
-
+if (env('APP_ENV') === 'production') {
+    \Illuminate\Support\Facades\URL::forceScheme('https');
+}
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
