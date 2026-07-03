@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libxml2-dev \
     libonig-dev \
-    nodejs \
-    npm \
     && docker-php-ext-install \
     pdo \
     pdo_pgsql \

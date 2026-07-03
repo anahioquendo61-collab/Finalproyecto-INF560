@@ -53,25 +53,25 @@ class RolePermissionSeeder extends Seeder
 
         // 3) Usuarios fijos de prueba
         $adminUser = User::firstOrCreate(
-            ['email' => 'admin@trello.com'],
+            ['email' => 'admin@gestorjira.com'],
             ['name' => 'Admin', 'password' => Hash::make('password')]
         );
         $adminUser->assignRole('admin');
 
         $liderUser = User::firstOrCreate(
-            ['email' => 'lider@trello.com'],
+            ['email' => 'lider@gestorjira.com'],
             ['name' => 'Lider', 'password' => Hash::make('password')]
         );
         $liderUser->assignRole('lider');
 
         $colaboradorUser = User::firstOrCreate(
-            ['email' => 'colaborador@trello.com'],
+            ['email' => 'colaborador@gestorjira.com'],
             ['name' => 'Colaborador', 'password' => Hash::make('password')]
         );
         $colaboradorUser->assignRole('colaborador');
 
         $invitadoUser = User::firstOrCreate(
-            ['email' => 'invitado@trello.com'],
+            ['email' => 'invitado@gestorjira.com'],
             ['name' => 'Invitado', 'password' => Hash::make('password')]
         );
         $invitadoUser->assignRole('invitado');

@@ -5,7 +5,7 @@ y PostgreSQL, inspirada en Trello. Proyecto Final — INF560 Desarrollo Web Back
 
 ## Autor
 
-Carlos Matos Paco — Ingeniería Informática, 5.° semestre — UATF
+Anahí Lourdes Oquendo Chucusea — Ingeniería Informática, 5.° semestre — UATF
 
 ## Stack tecnológico
 
@@ -24,7 +24,7 @@ Carlos Matos Paco — Ingeniería Informática, 5.° semestre — UATF
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/matos78630244-max/Proyecto-Final.git
+git clone https://github.com/anahioquendo61-collab/Finalproyecto-INF560.git
 cd trello-app
 ```
 
@@ -69,10 +69,10 @@ php artisan serve
 
 | Rol         | Email                    | Contraseña |
 |-------------|--------------------------|------------|
-| Admin       | admin@trello.com         | password   |
-| Líder       | lider@trello.com         | password   |
-| Colaborador | colaborador@trello.com   | password   |
-| Invitado    | invitado@trello.com      | password   |
+| Admin       | admin@gestorjira.com         | password   |
+| Líder       | lider@gestorjira.com         | password   |
+| Colaborador | colaborador@gestorjira.com   | password   |
+| Invitado    | invitado@gestorjira.com      | password   |
 
 ## Roles y permisos
 

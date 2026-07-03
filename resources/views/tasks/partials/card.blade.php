@@ -1,11 +1,11 @@
-<div class="bg-[#0D1117] border border-white/10 rounded-lg p-3 hover:border-white/20 transition-all group">
+<div class="bg-white border border-rose-100 rounded-2xl p-3 hover:border-rose-200 hover:shadow-sm transition-all group">
 
     {{-- Etiquetas --}}
     @if ($task->labels->count())
         <div class="flex gap-1 flex-wrap mb-2">
             @foreach ($task->labels as $label)
                 <span class="px-2 py-0.5 text-xs rounded-full text-white font-medium"
-                    style="background-color: {{ $label->color }}">
+                      style="background-color: {{ $label->color }}">
                     {{ $label->nombre }}
                 </span>
             @endforeach
@@ -14,29 +14,29 @@
 
     {{-- Título --}}
     <a href="{{ route('tasks.show', $task) }}"
-        class="text-gray-200 text-sm font-medium hover:text-white transition-colors line-clamp-2 block mb-2">
+       class="text-slate-700 text-sm font-medium hover:text-slate-900 transition-colors line-clamp-2 block mb-2">
         {{ $task->titulo }}
     </a>
 
     {{-- Prioridad y vencimiento --}}
     <div class="flex items-center gap-2 flex-wrap">
         <span class="px-2 py-0.5 text-xs rounded-full
-            {{ $task->prioridad === 'alta' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : '' }}
-            {{ $task->prioridad === 'media' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' : '' }}
-            {{ $task->prioridad === 'baja' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : '' }}">
+            {{ $task->prioridad === 'alta' ? 'bg-rose-100 text-rose-600 border border-rose-200' : '' }}
+            {{ $task->prioridad === 'media' ? 'bg-amber-100 text-amber-600 border border-amber-200' : '' }}
+            {{ $task->prioridad === 'baja' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : '' }}">
             {{ ucfirst($task->prioridad) }}
         </span>
 
         @if ($task->due_date)
-            <span class="text-xs {{ $task->isOverdue() ? 'text-red-400' : 'text-gray-500' }}">
+            <span class="text-xs {{ $task->isOverdue() ? 'text-rose-500' : 'text-slate-400' }}">
                 📅 {{ $task->due_date->format('d/m/Y') }}
             </span>
         @endif
 
         {{-- Responsable --}}
         @if ($task->assignee)
-            <div class="ml-auto w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-xs font-bold"
-                title="{{ $task->assignee->name }}">
+            <div class="ml-auto w-5 h-5 rounded-full bg-gradient-to-br from-rose-400 via-pink-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold"
+                 title="{{ $task->assignee->name }}">
                 {{ strtoupper(substr($task->assignee->name, 0, 1)) }}
             </div>
         @endif
@@ -48,8 +48,8 @@
             @csrf
             @method('PATCH')
             <select name="estado" onchange="this.form.submit()"
-                class="w-full bg-[#161B22] border border-white/10 text-gray-400 text-xs rounded-lg px-2 py-1
-                focus:outline-none focus:border-blue-500 transition-all cursor-pointer">
+                    class="w-full bg-rose-50 border border-rose-100 text-slate-600 text-xs rounded-xl px-2 py-1
+                    focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all cursor-pointer">
                 @foreach (['pendiente', 'en_progreso', 'completada'] as $e)
                     <option value="{{ $e }}" @selected($task->estado === $e)>
                         {{ str_replace('_', ' ', ucfirst($e)) }}
